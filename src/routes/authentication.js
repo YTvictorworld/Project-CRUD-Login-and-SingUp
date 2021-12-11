@@ -13,6 +13,19 @@ app.post('/singup', passport.authenticate('local.singup', {
 }))
 
 app.get("/profile", (req, res) => { 
-    req.send("This is your Profile")
+    res.send("This is your Profile")
 })
+
+app.get("/singin", (req, res) => { 
+    res.render('auth/login')
+})
+
+app.post("/singin", async (req, res, next) => { 
+    passport.authenticate('local.singin', { 
+        successRedirect: '/profile',
+         failureRedirect: '/singin',
+            failureFlash: true
+    })(req, res, next);
+})
+
 module.exports = app;
